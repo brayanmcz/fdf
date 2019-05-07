@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+         #
+#    By: brayan <brayan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/03 20:05:48 by bcastro           #+#    #+#              #
-#    Updated: 2019/04/29 12:54:19 by bcastro          ###   ########.fr        #
+#    Updated: 2019/05/05 14:06:28 by brayan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ all:
 	@echo ""
 	@$(MAKE) -w -s -C $(MINILIBX_DIR)
 	@echo ""
-	@gcc ./src/main.c ./lib/minilibx/libmlx.a -framework OpenGL -framework AppKit -o fdf
+	@gcc -Wall -Wextra -Werror ./src/main.c ./lib/minilibx/libmlx.a -framework OpenGL -framework AppKit -o fdf
 	@ ./fdf
 
 re: fclean all
