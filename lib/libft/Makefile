@@ -6,7 +6,7 @@
 #    By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/04 14:17:15 by bcastro           #+#    #+#              #
-#    Updated: 2019/03/28 23:32:00 by bcastro          ###   ########.fr        #
+#    Updated: 2019/05/08 17:50:13 by bcastro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ SRC_FILES = 				ft_putchar.c \
 					ft_lstadd.c \
 					ft_lstiter.c \
 					ft_lstmap.c \
+					get_next_line.c
 
 all: $(NAME)
 

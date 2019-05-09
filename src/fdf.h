@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:11:06 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/08 16:53:14 by brayan           ###   ########.fr       */
+/*   Updated: 2019/05/08 18:09:00 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # include "../lib/minilibx/mlx.h"
+# include "../lib/libft/libft.h"
 # include "stdlib.h"
 # include "stdio.h" //DELETE THIS before project submitted
 
