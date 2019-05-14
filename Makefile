@@ -6,14 +6,14 @@
 #    By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/03 20:05:48 by bcastro           #+#    #+#              #
-#    Updated: 2019/05/08 17:53:25 by bcastro          ###   ########.fr        #
+#    Updated: 2019/05/09 23:27:40 by bcastro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LIBFT_DIR = ./lib/libft
-MINILIBX_DIR  = ./lib/minilibx
+LIBFT_DIR = ./libft
+MINILIBX_DIR  = ./minilibx
 SRCS = ./src/main.c ./src/fdf.c
-LIBS = ./lib/minilibx/libmlx.a ./lib/libft/libft.a
+LIBS = ./minilibx/libmlx.a ./libft/libft.a
 
 #ECHO COLORS
 NOC=\033[0m
@@ -28,7 +28,7 @@ all:
 	@$(MAKE) -w -s -C $(MINILIBX_DIR)
 	@echo ""
 	@gcc -Wall -Wextra -Werror $(SRCS) $(LIBS) -framework OpenGL -framework AppKit -o fdf
-	# @ ./fdf test.txt
+	@echo "$(GREEN) ✓ Executable Created: 'fdf' $(NOC)"
 
 re: fclean all
 
