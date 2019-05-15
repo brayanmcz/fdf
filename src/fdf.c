@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/14 15:44:43 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/14 16:58:35 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,6 @@ int **get_map(char *file_name, int *x, int *y)
 
 	fd = safe_open(file_name);
 	get_content(fd, &file_content, &x_len, &y_len);
-
-	// printf("x_len: %d\n", x_len);
-	// printf("y_len: %d\n", y_len);
 	map = create_map(x_len, y_len); 
 	populate_map(&map, file_content, x_len, y_len);
 
@@ -161,12 +158,12 @@ int **get_map(char *file_name, int *x, int *y)
 void show_map(int **map, int col, int row)
 {
 	int size_mult;
-	size_mult = 2;
+	size_mult = 10;
 
 	void *mlx_ptr;
   void *win_ptr;
   mlx_ptr = mlx_init();
-  win_ptr = mlx_new_window(mlx_ptr, 1000, 1000, "fdf");
+  win_ptr = mlx_new_window(mlx_ptr, 500, 500, "fdf");
 
 	t_point start;
 	t_point end;
@@ -177,7 +174,7 @@ void show_map(int **map, int col, int row)
 	int col_origin = col;
 	int row_origin = row;
 
-	while (col - 1>= 0)
+	while (col - 1 >= 0)
 	{
 		row = row_origin;
 		while(row >= 0)
