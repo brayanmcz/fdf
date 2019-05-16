@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/14 16:58:35 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/16 02:04:21 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ void populate_map(int ***map, char *content, int x, int y)
 
 int **get_map(char *file_name, int *x, int *y)
 {
-
 	int		fd;
 	int		x_len;
 	int		y_len;
@@ -158,12 +157,14 @@ int **get_map(char *file_name, int *x, int *y)
 void show_map(int **map, int col, int row)
 {
 	int size_mult;
-	size_mult = 10;
+	size_mult = 20;
+	double theta = 0.25 * M_PI;
+	int margin = 200;
 
 	void *mlx_ptr;
   void *win_ptr;
   mlx_ptr = mlx_init();
-  win_ptr = mlx_new_window(mlx_ptr, 500, 500, "fdf");
+  win_ptr = mlx_new_window(mlx_ptr, 1000, 500, "fdf");
 
 	t_point start;
 	t_point end;
@@ -179,12 +180,22 @@ void show_map(int **map, int col, int row)
 		row = row_origin;
 		while(row >= 0)
 		{
-			start.x = (col * size_mult);
-			start.y = (row * size_mult);
-			start.z = map[row][col];
-			end.x = ((col - 1) * size_mult);
-			end.y = (row * size_mult);
-			end.z = map[row][col - 1];
+			int x = (col * size_mult);
+			int y = (row * size_mult);
+			int z = map[row][col] * size_mult;
+
+			start.x = x + margin;
+			start.y = (y * cos(theta)) + (z * sin(theta)) + margin;
+			start.z = (-y * sin(theta) + (z * cos(theta)));
+
+			x = ((col - 1) * size_mult);
+			y = (row * size_mult);
+			z = map[row][col - 1];
+
+			end.x = x + margin;
+			end.y = (y * cos(theta)) + (z * sin(theta)) + margin;
+			end.z = (-y * sin(theta) + (z * cos(theta)));
+			
 			line (start, end, mlx_ptr, win_ptr);
 			row--;
 		}
@@ -199,18 +210,44 @@ void show_map(int **map, int col, int row)
 		row = row_origin;
 		while(row - 1 >= 0)
 		{
-			start.x = (col * size_mult);
-			start.y = (row * size_mult);
-			start.z = map[row][col];
-			end.x = ((col) * size_mult);
-			end.y = ((row - 1) * size_mult);
-			end.z = map[row - 1][col];
+			int x = (col * size_mult);
+			int y = (row * size_mult);
+			int z = map[row][col] * size_mult;
+
+			start.x = x + margin;
+			start.y = (y * cos(theta)) + (z * sin(theta)) + margin;
+			start.z = (-y * sin(theta) + (z * cos(theta)));
+
+			x = (col * size_mult);
+			y = ((row - 1) * size_mult);
+			z = map[row - 1][col];
+
+			end.x = x + margin;
+			end.y = (y * cos(theta)) + (z * sin(theta)) + margin;
+			end.z = (-y * sin(theta) + (z * cos(theta)));
+			
 			line (start, end, mlx_ptr, win_ptr);
 			row--;
+
+			// int x = (col * size_mult);
+			// int y = (row * size_mult);
+
+			// start.x = x;
+			// start.z = map[row][col];
+			// start.y = (y * cos(45)) + (start.z * sin(45));
+
+			// x = (col * size_mult);
+			// y = ((row - 1) * size_mult);
+			// end.x = x;
+			// end.z = map[row - 1][col];
+			// end.y = (y * cos(45)) + (end.z * sin(45));
+
+			// line (start, end, mlx_ptr, win_ptr);
+			// row--;
+
 		}
 		col--;
 	}
-
 	mlx_loop(mlx_ptr);
 }
 
