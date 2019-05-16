@@ -17,6 +17,9 @@
 # include "stdlib.h"
 # include "stdio.h" //DELETE THIS before project submitted
 # include "unistd.h"
+# include "math.h"
+// # define PI 3.14159265358979323846
+
 
 typedef	struct	s_point {
 	int x;   //x position on map
