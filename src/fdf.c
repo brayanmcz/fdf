@@ -6,14 +6,14 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/16 02:04:21 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/16 20:19:06 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
 
 // Bresenham Line Algorithm
-void	line(t_point start, t_point end, void *mlx_ptr, void *win_ptr)
+void	line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
 {
 	int dx; 	//The difference between x1 and x0
 	int dy; 	//The difference between y1 and y0
@@ -21,23 +21,23 @@ void	line(t_point start, t_point end, void *mlx_ptr, void *win_ptr)
 	int sy;		//Is the line rising/horizontal or falling/vertical
 	int err;	//The amount of err from line is to center of pixel
 
-	dx = abs(end.x - start.x);
-	dy = abs(end.y - start.y);
-	sx = start.x < end.x ? 1 : -1;
-	sy = start.y < end.y ? 1 : -1;
+	dx = abs(dest.x - orig.x);
+	dy = abs(dest.y - orig.y);
+	sx = orig.x < dest.x ? 1 : -1;
+	sy = orig.y < dest.y ? 1 : -1;
 	err = (dx>dy ? dx : -dy) / 2;
-	while(start.x!=end.x || start.y!=end.y) //While the current pixel has not met the ending pixel
+	while(orig.x!=dest.x || orig.y!=dest.y) //While the current pixel has not met the ending pixel
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, start.x, start.y, 0xFFFFFF); //Place a pixel on the screen
+		mlx_pixel_put(mlx_ptr, win_ptr, orig.x, orig.y, 0xFFFFFF); //Place a pixel on the screen
 		if (2 * err > -dx)  //Determine if you should advance to the next pixel horizontally
 		{
 			err -= dy;
-			start.x += sx;
+			orig.x += sx;
 		}
 		if (2 * err < dy)   //Determine if you should advance to the next pixel vertically
 		{
 			err += dx;
-			start.y += sy;
+			orig.y += sy;
 		}
 	}
 }
@@ -158,16 +158,18 @@ void show_map(int **map, int col, int row)
 {
 	int size_mult;
 	size_mult = 20;
-	double theta = 0.25 * M_PI;
-	int margin = 200;
+	
+	double theta_x = 0 * M_PI;
+	double theta_y = 0 * M_PI;
+	double theta_z = 0 * M_PI;
 
 	void *mlx_ptr;
   void *win_ptr;
   mlx_ptr = mlx_init();
   win_ptr = mlx_new_window(mlx_ptr, 1000, 500, "fdf");
 
-	t_point start;
-	t_point end;
+	t_point orig;
+	t_point dest;
 
 	col--;
 	row--;
@@ -180,23 +182,28 @@ void show_map(int **map, int col, int row)
 		row = row_origin;
 		while(row >= 0)
 		{
-			int x = (col * size_mult);
-			int y = (row * size_mult);
-			int z = map[row][col] * size_mult;
+			orig.x = (col * size_mult);
+			orig.y = (row * size_mult);
+			orig.z = -1 * map[row][col] * size_mult;
 
-			start.x = x + margin;
-			start.y = (y * cos(theta)) + (z * sin(theta)) + margin;
-			start.z = (-y * sin(theta) + (z * cos(theta)));
+			dest.x =((col - 1) * size_mult);
+			dest.y = (row * size_mult);
+			dest.z = -1 * map[row][col - 1] * size_mult;	
 
-			x = ((col - 1) * size_mult);
-			y = (row * size_mult);
-			z = map[row][col - 1];
+			orig = x_axis_rotation(orig, theta_x);
+			orig = y_axis_rotation(orig, theta_y);
+			orig = z_axis_rotation(orig, theta_z);
 
-			end.x = x + margin;
-			end.y = (y * cos(theta)) + (z * sin(theta)) + margin;
-			end.z = (-y * sin(theta) + (z * cos(theta)));
+			dest = x_axis_rotation(dest, theta_x);
+			dest = y_axis_rotation(dest, theta_y);
+			dest = z_axis_rotation(dest, theta_z);
+
+			orig.x+=200;
+			orig.y+=200;
+			dest.x+=200;
+			dest.y+=200;
 			
-			line (start, end, mlx_ptr, win_ptr);
+			line (orig, dest, mlx_ptr, win_ptr);
 			row--;
 		}
 		col--;
@@ -210,41 +217,29 @@ void show_map(int **map, int col, int row)
 		row = row_origin;
 		while(row - 1 >= 0)
 		{
-			int x = (col * size_mult);
-			int y = (row * size_mult);
-			int z = map[row][col] * size_mult;
+			orig.x = (col * size_mult);
+			orig.y = (row * size_mult);
+			orig.z = -1 * map[row][col] * size_mult;
 
-			start.x = x + margin;
-			start.y = (y * cos(theta)) + (z * sin(theta)) + margin;
-			start.z = (-y * sin(theta) + (z * cos(theta)));
+			dest.x =(col * size_mult);
+			dest.y = ((row - 1) * size_mult);
+			dest.z = -1 * map[row - 1][col] * size_mult;
 
-			x = (col * size_mult);
-			y = ((row - 1) * size_mult);
-			z = map[row - 1][col];
+			orig = x_axis_rotation(orig, theta_x);
+			orig = y_axis_rotation(orig, theta_y);
+			orig = z_axis_rotation(orig, theta_z);
 
-			end.x = x + margin;
-			end.y = (y * cos(theta)) + (z * sin(theta)) + margin;
-			end.z = (-y * sin(theta) + (z * cos(theta)));
+			dest = x_axis_rotation(dest, theta_x);
+			dest = y_axis_rotation(dest, theta_y);
+			dest = z_axis_rotation(dest, theta_z);
+
+			orig.x+=200;
+			orig.y+=200;
+			dest.x+=200;
+			dest.y+=200;
 			
-			line (start, end, mlx_ptr, win_ptr);
+			line (orig, dest, mlx_ptr, win_ptr);
 			row--;
-
-			// int x = (col * size_mult);
-			// int y = (row * size_mult);
-
-			// start.x = x;
-			// start.z = map[row][col];
-			// start.y = (y * cos(45)) + (start.z * sin(45));
-
-			// x = (col * size_mult);
-			// y = ((row - 1) * size_mult);
-			// end.x = x;
-			// end.z = map[row - 1][col];
-			// end.y = (y * cos(45)) + (end.z * sin(45));
-
-			// line (start, end, mlx_ptr, win_ptr);
-			// row--;
-
 		}
 		col--;
 	}

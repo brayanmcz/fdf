@@ -18,8 +18,6 @@
 # include "stdio.h" //DELETE THIS before project submitted
 # include "unistd.h"
 # include "math.h"
-// # define PI 3.14159265358979323846
-
 
 typedef	struct	s_point {
 	int x;   //x position on map
@@ -27,8 +25,11 @@ typedef	struct	s_point {
 	int z;   //z poistion on map
 } t_point;
 
-// Bresenham Line Algorithm
 void	line(t_point start, t_point end, void *mlx_ptr, void *win_ptr);
 void	fdf(char *file_name);
+
+t_point x_axis_rotation(t_point point, double rad);
+t_point y_axis_rotation(t_point point, double rad);
+t_point z_axis_rotation(t_point point, double rad);
 
 #endif
