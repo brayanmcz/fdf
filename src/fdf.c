@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/17 22:57:31 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/17 23:01:27 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
 	err = (dx > dy ? dx : -dy) / 2;
 	while (orig.x != dest.x || orig.y != dest.y) //While the current pixel has not met the ending pixel
 	{
+		printf("drawing\n");
 		printf("orig.x: %d, dest.x: %d | orig.y: %d, dest.y: %d\n", orig.x, dest.x, orig.y, dest.y);
 		mlx_pixel_put(mlx_ptr, win_ptr, orig.x, orig.y, 0xFFFFFF); //Place a pixel on the screen
 		if (2 * err > -dx)																				 //Determine if you should advance to the next pixel horizontally
