@@ -28,8 +28,11 @@ typedef	struct	s_point {
 void	line(t_point start, t_point end, void *mlx_ptr, void *win_ptr);
 void	fdf(char *file_name);
 
-t_point x_axis_rotation(t_point point, double rad);
-t_point y_axis_rotation(t_point point, double rad);
-t_point z_axis_rotation(t_point point, double rad);
+t_point x_axis_rotation(t_point point, long double rad);
+t_point y_axis_rotation(t_point point, long double rad);
+t_point z_axis_rotation(t_point point, long double rad);
+t_point rotate(t_point point, int x, int y, int z);
+double deg_to_rad(int deg);
+
 
 #endif

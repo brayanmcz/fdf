@@ -6,35 +6,36 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/16 20:19:06 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/17 22:57:31 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
 
 // Bresenham Line Algorithm
-void	line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
+void line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
 {
-	int dx; 	//The difference between x1 and x0
-	int dy; 	//The difference between y1 and y0
-	int sx; 	//Is the line rising/horizontal or falling/vertical
-	int sy;		//Is the line rising/horizontal or falling/vertical
-	int err;	//The amount of err from line is to center of pixel
+	int dx;	//The difference between x1 and x0
+	int dy;	//The difference between y1 and y0
+	int sx;	//Is the line rising/horizontal or falling/vertical
+	int sy;	//Is the line rising/horizontal or falling/vertical
+	int err; //The amount of err from line is to center of pixel
 
 	dx = abs(dest.x - orig.x);
 	dy = abs(dest.y - orig.y);
 	sx = orig.x < dest.x ? 1 : -1;
 	sy = orig.y < dest.y ? 1 : -1;
-	err = (dx>dy ? dx : -dy) / 2;
-	while(orig.x!=dest.x || orig.y!=dest.y) //While the current pixel has not met the ending pixel
+	err = (dx > dy ? dx : -dy) / 2;
+	while (orig.x != dest.x || orig.y != dest.y) //While the current pixel has not met the ending pixel
 	{
+		printf("orig.x: %d, dest.x: %d | orig.y: %d, dest.y: %d\n", orig.x, dest.x, orig.y, dest.y);
 		mlx_pixel_put(mlx_ptr, win_ptr, orig.x, orig.y, 0xFFFFFF); //Place a pixel on the screen
-		if (2 * err > -dx)  //Determine if you should advance to the next pixel horizontally
+		if (2 * err > -dx)																				 //Determine if you should advance to the next pixel horizontally
 		{
 			err -= dy;
 			orig.x += sx;
 		}
-		if (2 * err < dy)   //Determine if you should advance to the next pixel vertically
+		if (2 * err < dy) //Determine if you should advance to the next pixel vertically
 		{
 			err += dx;
 			orig.y += sy;
@@ -42,11 +43,13 @@ void	line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
 	}
 }
 
-int safe_open(char *file){
+int safe_open(char *file)
+{
 	int fd;
-	
+
 	fd = open(file, O_RDONLY);
-	if (fd == -1){
+	if (fd == -1)
+	{
 		perror("open");
 		exit(fd);
 	}
@@ -74,11 +77,12 @@ int get_arr_len(char *line)
 }
 
 // Return the whole file as a single line
-void	get_content(int fd, char **map_arr, int *length, int *width){	
-	int		ret;
-	char	*line;
-	char 	*file_content;
-	char 	*tmp;
+void get_content(int fd, char **map_arr, int *length, int *width)
+{
+	int ret;
+	char *line;
+	char *file_content;
+	char *tmp;
 	int len;
 	int wth;
 
@@ -92,7 +96,8 @@ void	get_content(int fd, char **map_arr, int *length, int *width){
 		file_content = ft_strjoin(file_content, ft_strjoin(line, " "));
 		ft_strdel(&tmp);
 	}
-	if (ret == -1){
+	if (ret == -1)
+	{
 		perror("read");
 		exit(ret);
 	}
@@ -105,7 +110,7 @@ int **create_map(int cols, int rows)
 {
 	int i = 0;
 	int **map;
-	
+
 	map = (int **)malloc((rows) * sizeof(int *));
 	while (i < rows)
 		map[i++] = (int *)malloc(cols * sizeof(int));
@@ -113,7 +118,6 @@ int **create_map(int cols, int rows)
 	return (map);
 }
 
-//THERE IS SOMETHING WRONG HERE>
 void populate_map(int ***map, char *content, int x, int y)
 {
 	int x_iter = 0;
@@ -122,7 +126,7 @@ void populate_map(int ***map, char *content, int x, int y)
 	char **map_content;
 
 	map_content = ft_strsplit(ft_strjoin(content, "\0"), ' ');
-	
+
 	while (y_iter < y)
 	{
 		x_iter = 0;
@@ -135,18 +139,17 @@ void populate_map(int ***map, char *content, int x, int y)
 	}
 }
 
-
 int **get_map(char *file_name, int *x, int *y)
 {
-	int		fd;
-	int		x_len;
-	int		y_len;
-	int 	**map;
-	char 	*file_content;
+	int fd;
+	int x_len;
+	int y_len;
+	int **map;
+	char *file_content;
 
 	fd = safe_open(file_name);
 	get_content(fd, &file_content, &x_len, &y_len);
-	map = create_map(x_len, y_len); 
+	map = create_map(x_len, y_len);
 	populate_map(&map, file_content, x_len, y_len);
 
 	*x = x_len;
@@ -158,15 +161,16 @@ void show_map(int **map, int col, int row)
 {
 	int size_mult;
 	size_mult = 20;
-	
-	double theta_x = 0 * M_PI;
-	double theta_y = 0 * M_PI;
-	double theta_z = 0 * M_PI;
+
+	int rx, ry, rz;
+	rx = 0;
+	ry = 0;
+	rz = 41;
 
 	void *mlx_ptr;
-  void *win_ptr;
-  mlx_ptr = mlx_init();
-  win_ptr = mlx_new_window(mlx_ptr, 1000, 500, "fdf");
+	void *win_ptr;
+	mlx_ptr = mlx_init();
+	win_ptr = mlx_new_window(mlx_ptr, 1000, 500, "fdf");
 
 	t_point orig;
 	t_point dest;
@@ -180,30 +184,25 @@ void show_map(int **map, int col, int row)
 	while (col - 1 >= 0)
 	{
 		row = row_origin;
-		while(row >= 0)
+		while (row >= 0)
 		{
 			orig.x = (col * size_mult);
 			orig.y = (row * size_mult);
 			orig.z = -1 * map[row][col] * size_mult;
 
-			dest.x =((col - 1) * size_mult);
+			dest.x = ((col - 1) * size_mult);
 			dest.y = (row * size_mult);
-			dest.z = -1 * map[row][col - 1] * size_mult;	
+			dest.z = -1 * map[row][col - 1] * size_mult;
 
-			orig = x_axis_rotation(orig, theta_x);
-			orig = y_axis_rotation(orig, theta_y);
-			orig = z_axis_rotation(orig, theta_z);
+			orig = rotate(orig, rx, ry, rz);
+			dest = rotate(dest, rx, ry, rz);
 
-			dest = x_axis_rotation(dest, theta_x);
-			dest = y_axis_rotation(dest, theta_y);
-			dest = z_axis_rotation(dest, theta_z);
+			orig.x += 200;
+			orig.y += 200;
+			dest.x += 200;
+			dest.y += 200;
 
-			orig.x+=200;
-			orig.y+=200;
-			dest.x+=200;
-			dest.y+=200;
-			
-			line (orig, dest, mlx_ptr, win_ptr);
+			line(orig, dest, mlx_ptr, win_ptr);
 			row--;
 		}
 		col--;
@@ -215,30 +214,25 @@ void show_map(int **map, int col, int row)
 	while (col >= 0)
 	{
 		row = row_origin;
-		while(row - 1 >= 0)
+		while (row - 1 >= 0)
 		{
 			orig.x = (col * size_mult);
 			orig.y = (row * size_mult);
 			orig.z = -1 * map[row][col] * size_mult;
 
-			dest.x =(col * size_mult);
+			dest.x = (col * size_mult);
 			dest.y = ((row - 1) * size_mult);
 			dest.z = -1 * map[row - 1][col] * size_mult;
 
-			orig = x_axis_rotation(orig, theta_x);
-			orig = y_axis_rotation(orig, theta_y);
-			orig = z_axis_rotation(orig, theta_z);
+			orig = rotate(orig, rx, ry, rz);
+			dest = rotate(dest, rx, ry, rz);
 
-			dest = x_axis_rotation(dest, theta_x);
-			dest = y_axis_rotation(dest, theta_y);
-			dest = z_axis_rotation(dest, theta_z);
+			orig.x += 200;
+			orig.y += 200;
+			dest.x += 200;
+			dest.y += 200;
 
-			orig.x+=200;
-			orig.y+=200;
-			dest.x+=200;
-			dest.y+=200;
-			
-			line (orig, dest, mlx_ptr, win_ptr);
+			line(orig, dest, mlx_ptr, win_ptr);
 			row--;
 		}
 		col--;
@@ -246,7 +240,7 @@ void show_map(int **map, int col, int row)
 	mlx_loop(mlx_ptr);
 }
 
-void	fdf(char *file_name)
+void fdf(char *file_name)
 {
 	int **map;
 	int x;
