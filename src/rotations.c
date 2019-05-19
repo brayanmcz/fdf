@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 16:53:18 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/17 21:17:23 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/18 19:17:52 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_point rotate(t_point point, int x, int y, int z)
 	return (point);
 }
 
-t_point x_axis_rotation(t_point point, long double rad)
+t_point x_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
@@ -44,7 +44,7 @@ t_point x_axis_rotation(t_point point, long double rad)
 	return (new_point);
 }
 
-t_point y_axis_rotation(t_point point, long double rad)
+t_point y_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
@@ -54,7 +54,7 @@ t_point y_axis_rotation(t_point point, long double rad)
 	return (new_point);
 }
 
-t_point z_axis_rotation(t_point point, long double rad)
+t_point z_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
