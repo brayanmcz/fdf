@@ -21,9 +21,9 @@
 
 typedef struct s_point
 {
-	int x; //x position on map
-	int y; //y position on map
-	int z; //z poistion on map
+	double x; //x position on map
+	double y; //y position on map
+	double z; //z poistion on map
 } t_point;
 
 void line(t_point start, t_point end, void *mlx_ptr, void *win_ptr);

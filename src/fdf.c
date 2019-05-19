@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/18 20:42:46 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/18 21:22:49 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,16 @@
 // Bresenham Line Algorithm
 void line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
 {
-	int dx = abs(dest.x - orig.x);
-	int dy = -abs(dest.y - orig.y);
+	orig.x = (int)orig.x;
+	orig.y = (int)orig.y;
+	orig.z = (int)orig.z;
+
+	dest.x = (int)dest.x;
+	dest.y = (int)dest.y;
+	dest.z = (int)dest.z;
+
+	int dx = fabs(dest.x - orig.x);
+	int dy = -fabs(dest.y - orig.y);
 	int sx = orig.x < dest.x ? 1 : -1;
 	int sy = orig.y < dest.y ? 1 : -1;
 	int err = dx + dy, e2;
@@ -28,7 +36,7 @@ void line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
 		if (orig.x == dest.x && orig.y == dest.y)
 			break;
 		e2 = 2 * err;
-		// printf("X: %d,%d | y: %d,%d | err %d, e2: %d | dy: %d, dx: %d\n", orig.x, dest.x, orig.y, dest.y, err, e2, dy, dx);
+		// printf("X: %f,%f | y: %f,%f | err %f, e2: %f | dy: %f, dx: %f\n", orig.x, dest.x, orig.y, dest.y, err, e2, dy, dx);
 		if (e2 >= dy)
 		{
 			err += dy;
@@ -192,15 +200,21 @@ void show_map(int **map, int col, int row)
 			dest.y = (row * size_mult);
 			dest.z = -1 * map[row][col - 1] * size_mult;
 
-			orig = rotate(orig, rx, ry, rz);
-			dest = rotate(dest, rx, ry, rz);
+			if (row == 10 && col == 18)
+			{
+				orig = rotate(orig, rx, ry, rz);
+				dest = rotate(dest, rx, ry, rz);
 
-			orig.x += 100;
-			orig.y += 100;
-			dest.x += 100;
-			dest.y += 100;
+				printf("orig.x: %f, orig.y %f \n", orig.x, orig.y);
+				printf("dest.x: %f, dest.y %f \n", dest.x, dest.y);
 
-			line(orig, dest, mlx_ptr, win_ptr);
+				orig.x += 100;
+				orig.y += 100;
+				dest.x += 100;
+				dest.y += 100;
+
+				line(orig, dest, mlx_ptr, win_ptr);
+			}
 
 			row--;
 		}
@@ -210,33 +224,33 @@ void show_map(int **map, int col, int row)
 	col = col_origin;
 	row = row_origin;
 
-	while (col >= 0)
-	{
-		row = row_origin;
-		while (row - 1 >= 0)
-		{
-			orig.x = (col * size_mult);
-			orig.y = (row * size_mult);
-			orig.z = -1 * map[row][col] * size_mult;
+	// while (col >= 0)
+	// {
+	// 	row = row_origin;
+	// 	while (row - 1 >= 0)
+	// 	{
+	// 		orig.x = (col * size_mult);
+	// 		orig.y = (row * size_mult);
+	// 		orig.z = -1 * map[row][col] * size_mult;
 
-			dest.x = (col * size_mult);
-			dest.y = ((row - 1) * size_mult);
-			dest.z = -1 * map[row - 1][col] * size_mult;
+	// 		dest.x = (col * size_mult);
+	// 		dest.y = ((row - 1) * size_mult);
+	// 		dest.z = -1 * map[row - 1][col] * size_mult;
 
-			orig = rotate(orig, rx, ry, rz);
-			dest = rotate(dest, rx, ry, rz);
+	// 		orig = rotate(orig, rx, ry, rz);
+	// 		dest = rotate(dest, rx, ry, rz);
 
-			orig.x += 100;
-			orig.y += 100;
-			dest.x += 100;
-			dest.y += 100;
+	// 		orig.x += 100;
+	// 		orig.y += 100;
+	// 		dest.x += 100;
+	// 		dest.y += 100;
 
-			line(dest, orig, mlx_ptr, win_ptr);
+	// 		line(dest, orig, mlx_ptr, win_ptr);
 
-			row--;
-		}
-		col--;
-	}
+	// 		row--;
+	// 	}
+	// 	col--;
+	// }
 	mlx_loop(mlx_ptr);
 }
 

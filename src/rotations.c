@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 16:53:18 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/18 19:17:52 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/18 21:15:57 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,13 @@ t_point y_axis_rotation(t_point point, double rad)
 t_point z_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
+	printf("point\n");
+	printf("%.10f\n", point.x * cos(rad) - point.y * sin(rad));
+	printf("%.10f\n", point.x * sin(rad) + point.y * cos(rad));
 
 	new_point.x = point.x * cos(rad) - point.y * sin(rad);
 	new_point.y = point.x * sin(rad) + point.y * cos(rad);
 	new_point.z = point.z;
+
 	return (new_point);
 }
