@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/18 21:22:49 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/18 23:08:01 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,9 +168,9 @@ void show_map(int **map, int col, int row)
 	size_mult = 20;
 
 	int rx, ry, rz;
-	rx = 0;
-	ry = 0;
-	rz = 45;
+	rx = 45;
+	ry = 30;
+	rz = -45;
 
 	void *mlx_ptr;
 	void *win_ptr;
@@ -200,13 +200,8 @@ void show_map(int **map, int col, int row)
 			dest.y = (row * size_mult);
 			dest.z = -1 * map[row][col - 1] * size_mult;
 
-			if (row == 10 && col == 18)
-			{
 				orig = rotate(orig, rx, ry, rz);
 				dest = rotate(dest, rx, ry, rz);
-
-				printf("orig.x: %f, orig.y %f \n", orig.x, orig.y);
-				printf("dest.x: %f, dest.y %f \n", dest.x, dest.y);
 
 				orig.x += 100;
 				orig.y += 100;
@@ -214,7 +209,6 @@ void show_map(int **map, int col, int row)
 				dest.y += 100;
 
 				line(orig, dest, mlx_ptr, win_ptr);
-			}
 
 			row--;
 		}
@@ -224,33 +218,33 @@ void show_map(int **map, int col, int row)
 	col = col_origin;
 	row = row_origin;
 
-	// while (col >= 0)
-	// {
-	// 	row = row_origin;
-	// 	while (row - 1 >= 0)
-	// 	{
-	// 		orig.x = (col * size_mult);
-	// 		orig.y = (row * size_mult);
-	// 		orig.z = -1 * map[row][col] * size_mult;
+	while (col >= 0)
+	{
+		row = row_origin;
+		while (row - 1 >= 0)
+		{
+			orig.x = (col * size_mult);
+			orig.y = (row * size_mult);
+			orig.z = -1 * map[row][col] * size_mult;
 
-	// 		dest.x = (col * size_mult);
-	// 		dest.y = ((row - 1) * size_mult);
-	// 		dest.z = -1 * map[row - 1][col] * size_mult;
+			dest.x = (col * size_mult);
+			dest.y = ((row - 1) * size_mult);
+			dest.z = -1 * map[row - 1][col] * size_mult;
 
-	// 		orig = rotate(orig, rx, ry, rz);
-	// 		dest = rotate(dest, rx, ry, rz);
+			orig = rotate(orig, rx, ry, rz);
+			dest = rotate(dest, rx, ry, rz);
 
-	// 		orig.x += 100;
-	// 		orig.y += 100;
-	// 		dest.x += 100;
-	// 		dest.y += 100;
+			orig.x += 100;
+			orig.y += 100;
+			dest.x += 100;
+			dest.y += 100;
 
-	// 		line(dest, orig, mlx_ptr, win_ptr);
+			line(dest, orig, mlx_ptr, win_ptr);
 
-	// 		row--;
-	// 	}
-	// 	col--;
-	// }
+			row--;
+		}
+		col--;
+	}
 	mlx_loop(mlx_ptr);
 }
 
