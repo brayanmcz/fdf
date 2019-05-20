@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/19 22:14:47 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/19 23:27:38 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,34 @@ int get_arr_len(char *line)
 	len = 0;
 	while (arr[i])
 	{
+		free(arr[i]);
 		i++;
 		len++;
 	}
+	free(arr);
 
 	return (len);
 }
 
-// Return the whole file as a single line
 void get_content(int fd, char **map_arr, int *length, int *width)
 {
-	int ret;
-	char *line;
-	char *file_content;
-	char *tmp;
-	int len;
-	int wth;
+	int		ret;
+	char	*line;
+	char	*file_content;
+	char	*tmp;
+	char	*temp;
 
-	wth = 0;
+	*width = 0;
 	file_content = ft_strnew(0);
 	while ((ret = get_next_line(fd, &line)) == 1)
 	{
-		wth++;
-		len = get_arr_len(line);
+		*width = *width + 1;
+		*length = get_arr_len(line);
 		tmp = file_content;
-		file_content = ft_strjoin(file_content, ft_strjoin(line, " "));
+		file_content = ft_strjoin(file_content, temp = ft_strjoin(line, " "));
+		ft_strdel(&line);
 		ft_strdel(&tmp);
+		ft_strdel(&temp);
 	}
 	if (ret == -1)
 	{
@@ -71,8 +73,6 @@ void get_content(int fd, char **map_arr, int *length, int *width)
 		exit(ret);
 	}
 	*map_arr = file_content;
-	*length = len;
-	*width = wth;
 }
 
 int **create_map(int cols, int rows)
@@ -92,18 +92,24 @@ void populate_map(int ***map, char *content, int x, int y)
 	int y_iter = 0;
 	int m_iter = 0;
 	char **map_content;
+	char *temp;
 
-	map_content = ft_strsplit(ft_strjoin(content, "\0"), ' ');
+	map_content = ft_strsplit(temp = ft_strjoin(content, "\0"), ' ');
+	free(temp);
 	while (y_iter < y)
 	{
 		x_iter = 0;
 		while (x_iter < x)
 		{
-			(*map)[y_iter][x_iter] = ft_atoi(map_content[m_iter++]);
-			x_iter++;
+			(*map)[y_iter][x_iter++] = ft_atoi(map_content[m_iter]);
+			free(map_content[m_iter]);
+			m_iter++;
 		}
 		y_iter++;
 	}
+
+	free(map_content);
+	free(content);
 }
 
 int **get_map(char *file_name, int *x, int *y)
@@ -127,7 +133,7 @@ int **get_map(char *file_name, int *x, int *y)
 void show_map(int **map, int col, int row)
 {
 	int size_mult;
-	size_mult = 20;
+	size_mult = 2;
 
 	int rx, ry, rz;
 	rx = 0;
@@ -165,12 +171,12 @@ void show_map(int **map, int col, int row)
 			orig = iso_axis_rotation(orig);
 			dest = iso_axis_rotation(dest);
 
-			orig.x += 10;
-			orig.y += 350;
-			dest.x += 10;
-			dest.y += 350;
+			// orig.x += 10;
+			// orig.y += 350;
+			// dest.x += 10;
+			// dest.y += 350;
 
-			// line(orig, dest, mlx_ptr, win_ptr);
+			line(orig, dest, mlx_ptr, win_ptr);
 
 			row--;
 		}
@@ -180,10 +186,10 @@ void show_map(int **map, int col, int row)
 	col = col_origin;
 	row = row_origin;
 
-	while (col >= 0)
+	while (row - 1 >= 0)
 	{
-		row = row_origin;
-		while (row - 1 >= 0)
+		col = col_origin;
+		while (col >= 0)
 		{
 			orig.x = (col * size_mult);
 			orig.y = (row * size_mult);
@@ -196,18 +202,19 @@ void show_map(int **map, int col, int row)
 			orig = iso_axis_rotation(orig);
 			dest = iso_axis_rotation(dest);
 
-			orig.x += 10;
-			orig.y += 350;
-			dest.x += 10;
-			dest.y += 350;
+			// orig.x += 10;
+			// orig.y += 350;
+			// dest.x += 10;
+			// dest.y += 350;
 
 			line(dest, orig, mlx_ptr, win_ptr);
-
-			row--;
+			col--;
 		}
-		break;
-		col--;
+		free(map[row]);
+		row--;
 	}
+	free(map[row]);
+	free(map);
 	mlx_loop(mlx_ptr);
 }
 

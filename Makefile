@@ -6,7 +6,7 @@
 #    By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/03 20:05:48 by bcastro           #+#    #+#              #
-#    Updated: 2019/05/19 20:32:55 by bcastro          ###   ########.fr        #
+#    Updated: 2019/05/19 22:21:31 by bcastro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ all:
 	@echo "FDF:"
 	@gcc -Wall -Wextra -Werror $(SRCS) $(LIBS) -framework OpenGL -framework AppKit -o fdf
 	@echo "$(GREEN) ✓ FDF: Created executable 'fdf' $(NOC)"
+	@ ./fdf maps/42.fdf
 
 re: fclean all
 
