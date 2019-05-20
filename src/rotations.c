@@ -6,17 +6,19 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 16:53:18 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/19 13:48:21 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/19 19:03:09 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "../includes/fdf.h"
 
 /*
 ** Rotations for a point in 3D space
+**
+** Comments:
 */
 
-double deg_to_rad(int deg)
+double	deg_to_rad(int deg)
 {
 	double rad;
 
@@ -24,7 +26,7 @@ double deg_to_rad(int deg)
 	return (rad);
 }
 
-t_point rotate(t_point point, int x, int y, int z)
+t_point	rotate(t_point point, int x, int y, int z)
 {
 	point = x_axis_rotation(point, deg_to_rad(x));
 	point = y_axis_rotation(point, deg_to_rad(y));
@@ -32,7 +34,16 @@ t_point rotate(t_point point, int x, int y, int z)
 	return (point);
 }
 
-t_point x_axis_rotation(t_point point, double rad)
+t_point	iso_axis_rotation(t_point point)
+{
+	t_point new_point;
+
+	new_point.x = (point.x + point.y) * cos(0.523599);
+	new_point.y = (point.x - point.y) * -sin(0.523599) + point.z;
+	return (new_point);
+}
+
+t_point	x_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
@@ -42,7 +53,7 @@ t_point x_axis_rotation(t_point point, double rad)
 	return (new_point);
 }
 
-t_point y_axis_rotation(t_point point, double rad)
+t_point	y_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
@@ -52,7 +63,7 @@ t_point y_axis_rotation(t_point point, double rad)
 	return (new_point);
 }
 
-t_point z_axis_rotation(t_point point, double rad)
+t_point	z_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 

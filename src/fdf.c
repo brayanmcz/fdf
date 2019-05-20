@@ -6,39 +6,11 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/19 13:48:30 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/19 22:14:47 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
-
-// Bresenham Line Algorithm
-void line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
-{
-	int dx = abs(dest.x - orig.x);
-	int dy = -abs(dest.y - orig.y);
-	int sx = orig.x < dest.x ? 1 : -1;
-	int sy = orig.y < dest.y ? 1 : -1;
-	int err = dx + dy, e2;
-
-	while (1)
-	{
-		mlx_pixel_put(mlx_ptr, win_ptr, orig.x, orig.y, 0xFFFFFF);
-		if (orig.x == dest.x && orig.y == dest.y)
-			break;
-		e2 = 2 * err;
-		if (e2 >= dy)
-		{
-			err += dy;
-			orig.x += sx;
-		}
-		if (e2 <= dx)
-		{
-			err += dx;
-			orig.y += sy;
-		}
-	}
-}
+#include "../includes/fdf.h"
 
 int safe_open(char *file)
 {
@@ -158,9 +130,9 @@ void show_map(int **map, int col, int row)
 	size_mult = 20;
 
 	int rx, ry, rz;
-	rx = 10;
-	ry = -5;
-	rz = -10;
+	rx = 0;
+	ry = 0;
+	rz = 45;
 
 	void *mlx_ptr;
 	void *win_ptr;
@@ -190,15 +162,15 @@ void show_map(int **map, int col, int row)
 			dest.y = (row * size_mult);
 			dest.z = -1 * map[row][col - 1] * size_mult;
 
-			orig = rotate(orig, rx, ry, rz);
-			dest = rotate(dest, rx, ry, rz);
+			orig = iso_axis_rotation(orig);
+			dest = iso_axis_rotation(dest);
 
-			orig.x += 100;
-			orig.y += 100;
-			dest.x += 100;
-			dest.y += 100;
+			orig.x += 10;
+			orig.y += 350;
+			dest.x += 10;
+			dest.y += 350;
 
-			line(orig, dest, mlx_ptr, win_ptr);
+			// line(orig, dest, mlx_ptr, win_ptr);
 
 			row--;
 		}
@@ -221,18 +193,19 @@ void show_map(int **map, int col, int row)
 			dest.y = ((row - 1) * size_mult);
 			dest.z = -1 * map[row - 1][col] * size_mult;
 
-			orig = rotate(orig, rx, ry, rz);
-			dest = rotate(dest, rx, ry, rz);
+			orig = iso_axis_rotation(orig);
+			dest = iso_axis_rotation(dest);
 
-			orig.x += 100;
-			orig.y += 100;
-			dest.x += 100;
-			dest.y += 100;
+			orig.x += 10;
+			orig.y += 350;
+			dest.x += 10;
+			dest.y += 350;
 
 			line(dest, orig, mlx_ptr, win_ptr);
 
 			row--;
 		}
+		break;
 		col--;
 	}
 	mlx_loop(mlx_ptr);
