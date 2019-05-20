@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/17 22:57:31 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/19 13:48:30 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,24 @@
 // Bresenham Line Algorithm
 void line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
 {
-	int dx;	//The difference between x1 and x0
-	int dy;	//The difference between y1 and y0
-	int sx;	//Is the line rising/horizontal or falling/vertical
-	int sy;	//Is the line rising/horizontal or falling/vertical
-	int err; //The amount of err from line is to center of pixel
+	int dx = abs(dest.x - orig.x);
+	int dy = -abs(dest.y - orig.y);
+	int sx = orig.x < dest.x ? 1 : -1;
+	int sy = orig.y < dest.y ? 1 : -1;
+	int err = dx + dy, e2;
 
-	dx = abs(dest.x - orig.x);
-	dy = abs(dest.y - orig.y);
-	sx = orig.x < dest.x ? 1 : -1;
-	sy = orig.y < dest.y ? 1 : -1;
-	err = (dx > dy ? dx : -dy) / 2;
-	while (orig.x != dest.x || orig.y != dest.y) //While the current pixel has not met the ending pixel
+	while (1)
 	{
-		printf("orig.x: %d, dest.x: %d | orig.y: %d, dest.y: %d\n", orig.x, dest.x, orig.y, dest.y);
-		mlx_pixel_put(mlx_ptr, win_ptr, orig.x, orig.y, 0xFFFFFF); //Place a pixel on the screen
-		if (2 * err > -dx)																				 //Determine if you should advance to the next pixel horizontally
+		mlx_pixel_put(mlx_ptr, win_ptr, orig.x, orig.y, 0xFFFFFF);
+		if (orig.x == dest.x && orig.y == dest.y)
+			break;
+		e2 = 2 * err;
+		if (e2 >= dy)
 		{
-			err -= dy;
+			err += dy;
 			orig.x += sx;
 		}
-		if (2 * err < dy) //Determine if you should advance to the next pixel vertically
+		if (e2 <= dx)
 		{
 			err += dx;
 			orig.y += sy;
@@ -110,7 +107,6 @@ int **create_map(int cols, int rows)
 {
 	int i = 0;
 	int **map;
-
 	map = (int **)malloc((rows) * sizeof(int *));
 	while (i < rows)
 		map[i++] = (int *)malloc(cols * sizeof(int));
@@ -126,7 +122,6 @@ void populate_map(int ***map, char *content, int x, int y)
 	char **map_content;
 
 	map_content = ft_strsplit(ft_strjoin(content, "\0"), ' ');
-
 	while (y_iter < y)
 	{
 		x_iter = 0;
@@ -163,14 +158,14 @@ void show_map(int **map, int col, int row)
 	size_mult = 20;
 
 	int rx, ry, rz;
-	rx = 0;
-	ry = 0;
-	rz = 41;
+	rx = 10;
+	ry = -5;
+	rz = -10;
 
 	void *mlx_ptr;
 	void *win_ptr;
 	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 1000, 500, "fdf");
+	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "fdf");
 
 	t_point orig;
 	t_point dest;
@@ -186,6 +181,7 @@ void show_map(int **map, int col, int row)
 		row = row_origin;
 		while (row >= 0)
 		{
+
 			orig.x = (col * size_mult);
 			orig.y = (row * size_mult);
 			orig.z = -1 * map[row][col] * size_mult;
@@ -197,12 +193,13 @@ void show_map(int **map, int col, int row)
 			orig = rotate(orig, rx, ry, rz);
 			dest = rotate(dest, rx, ry, rz);
 
-			orig.x += 200;
-			orig.y += 200;
-			dest.x += 200;
-			dest.y += 200;
+			orig.x += 100;
+			orig.y += 100;
+			dest.x += 100;
+			dest.y += 100;
 
 			line(orig, dest, mlx_ptr, win_ptr);
+
 			row--;
 		}
 		col--;
@@ -227,12 +224,13 @@ void show_map(int **map, int col, int row)
 			orig = rotate(orig, rx, ry, rz);
 			dest = rotate(dest, rx, ry, rz);
 
-			orig.x += 200;
-			orig.y += 200;
-			dest.x += 200;
-			dest.y += 200;
+			orig.x += 100;
+			orig.y += 100;
+			dest.x += 100;
+			dest.y += 100;
 
-			line(orig, dest, mlx_ptr, win_ptr);
+			line(dest, orig, mlx_ptr, win_ptr);
+
 			row--;
 		}
 		col--;

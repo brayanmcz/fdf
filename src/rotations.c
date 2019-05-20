@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 16:53:18 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/17 21:17:23 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/19 13:48:21 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 /*
 ** Rotations for a point in 3D space
-**
-** deg_to_rad(int deg) : Convert degrees (0-360) into radians
 */
 
 double deg_to_rad(int deg)
@@ -34,7 +32,7 @@ t_point rotate(t_point point, int x, int y, int z)
 	return (point);
 }
 
-t_point x_axis_rotation(t_point point, long double rad)
+t_point x_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
@@ -44,7 +42,7 @@ t_point x_axis_rotation(t_point point, long double rad)
 	return (new_point);
 }
 
-t_point y_axis_rotation(t_point point, long double rad)
+t_point y_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
@@ -54,12 +52,13 @@ t_point y_axis_rotation(t_point point, long double rad)
 	return (new_point);
 }
 
-t_point z_axis_rotation(t_point point, long double rad)
+t_point z_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
 	new_point.x = point.x * cos(rad) - point.y * sin(rad);
 	new_point.y = point.x * sin(rad) + point.y * cos(rad);
 	new_point.z = point.z;
+
 	return (new_point);
 }
