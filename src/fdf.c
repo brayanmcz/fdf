@@ -6,13 +6,13 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/21 15:09:15 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/21 16:13:31 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-int safe_open(char *file)
+int		safe_open(char *file)
 {
 	int fd;
 
@@ -25,17 +25,19 @@ int safe_open(char *file)
 	return (fd);
 }
 
-void fdf(char *file_name)
+void	fdf(char *file_name)
 {
-	t_fdf fdf;
-	int x;
-	int y;
+	t_fdf	fdf;
+	int		x;
+	int		y;
 
 	fdf.camera.x_rot = 0;
 	fdf.camera.y_rot = 0;
 	fdf.camera.z_rot = 45;
-	fdf.camera.zoom = 20;
+	fdf.camera.zoom = 10;
 	fdf.camera.projection = ISO;
+	fdf.camera.x_offset = 80;
+	fdf.camera.y_offset = 80;	
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 500, 500, "fdf");
 

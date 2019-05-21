@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/16 16:53:18 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/19 19:03:09 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/21 15:58:30 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** Comments:
 */
 
-double	deg_to_rad(int deg)
+double		deg_to_rad(int deg)
 {
 	double rad;
 
@@ -26,7 +26,7 @@ double	deg_to_rad(int deg)
 	return (rad);
 }
 
-t_point	rotate(t_point point, int x, int y, int z)
+t_point		rotate(t_point point, int x, int y, int z)
 {
 	point = x_axis_rotation(point, deg_to_rad(x));
 	point = y_axis_rotation(point, deg_to_rad(y));
@@ -34,7 +34,7 @@ t_point	rotate(t_point point, int x, int y, int z)
 	return (point);
 }
 
-t_point	iso_axis_rotation(t_point point)
+t_point		iso_axis_rotation(t_point point)
 {
 	t_point new_point;
 
@@ -43,7 +43,7 @@ t_point	iso_axis_rotation(t_point point)
 	return (new_point);
 }
 
-t_point	x_axis_rotation(t_point point, double rad)
+t_point		x_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
@@ -53,7 +53,7 @@ t_point	x_axis_rotation(t_point point, double rad)
 	return (new_point);
 }
 
-t_point	y_axis_rotation(t_point point, double rad)
+t_point		y_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 
@@ -63,7 +63,7 @@ t_point	y_axis_rotation(t_point point, double rad)
 	return (new_point);
 }
 
-t_point	z_axis_rotation(t_point point, double rad)
+t_point		z_axis_rotation(t_point point, double rad)
 {
 	t_point new_point;
 

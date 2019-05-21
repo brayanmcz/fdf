@@ -6,13 +6,13 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/19 20:26:38 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/21 15:28:06 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/21 16:22:40 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void draw_line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
+void	draw_line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
 {
 	t_line line;
 
@@ -38,16 +38,14 @@ void draw_line(t_point orig, t_point dest, void *mlx_ptr, void *win_ptr)
 	}
 }
 
-void show_cols(t_fdf fdf, int col, int row)
+void	show_cols(t_fdf fdf, int col, int row)
 {
 	fdf.orig.x = (col * fdf.camera.zoom);
 	fdf.orig.y = (row * fdf.camera.zoom);
 	fdf.orig.z = -1 * fdf.map[row][col] * fdf.camera.zoom;
-
 	fdf.dest.x = ((col - 1) * fdf.camera.zoom);
 	fdf.dest.y = (row * fdf.camera.zoom);
 	fdf.dest.z = -1 * fdf.map[row][col - 1] * fdf.camera.zoom;
-
 	if (fdf.camera.projection == ISO)
 	{
 		fdf.orig = iso_axis_rotation(fdf.orig);
@@ -64,20 +62,19 @@ void show_cols(t_fdf fdf, int col, int row)
 											fdf.camera.y_rot,
 											fdf.camera.z_rot);
 	}
-
 	draw_line(fdf.orig, fdf.dest, fdf.mlx_ptr, fdf.win_ptr);
 }
 
-void show_rows(t_fdf fdf, int col, int row)
+
+
+void	show_rows(t_fdf fdf, int col, int row)
 {
 	fdf.orig.x = (col * fdf.camera.zoom);
 	fdf.orig.y = (row * fdf.camera.zoom);
 	fdf.orig.z = -1 * fdf.map[row][col] * fdf.camera.zoom;
-
 	fdf.dest.x = (col * fdf.camera.zoom);
-	fdf.dest.y = ((row - 1) * fdf.camera.zoom);
+	fdf.dest.y = (((row - 1) * fdf.camera.zoom));
 	fdf.dest.z = -1 * fdf.map[row - 1][col] * fdf.camera.zoom;
-
 	if (fdf.camera.projection == ISO)
 	{
 		fdf.orig = iso_axis_rotation(fdf.orig);
@@ -97,36 +94,29 @@ void show_rows(t_fdf fdf, int col, int row)
 	draw_line(fdf.dest, fdf.orig, fdf.mlx_ptr, fdf.win_ptr);
 }
 
-void show_map(t_fdf fdf, int col, int row)
+void	show_map(t_fdf fdf, int col, int row)
 {
-	int col_origin = col;
-	int row_origin = row;
+	int	col_origin;
+	int	row_origin;
+
+	col_origin = col;
+	row_origin = row;
 
 	while (row >= 0)
 	{
 		col = col_origin;
 		while (col - 1 >= 0)
-		{
-			show_cols(fdf, col, row);
-
-			col--;
-		}
+			show_cols(fdf, col--, row);
 		row--;
 	}
-
 	col = col_origin;
 	row = row_origin;
-
 	while (row - 1 >= 0)
 	{
 		col = col_origin;
 		while (col >= 0)
-		{
-			show_rows(fdf, col, row);
-			col--;
-		}
-		free(fdf.map[row]);
-		row--;
+			show_rows(fdf, col--, row);
+		free(fdf.map[row--]);
 	}
 	free(fdf.map[row]);
 	free(fdf.map);
