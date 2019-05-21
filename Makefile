@@ -6,13 +6,13 @@
 #    By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/03 20:05:48 by bcastro           #+#    #+#              #
-#    Updated: 2019/05/17 23:18:48 by bcastro          ###   ########.fr        #
+#    Updated: 2019/05/21 00:21:08 by bcastro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LIBFT_DIR = ./libft
 MINILIBX_DIR  = ./minilibx
-SRCS = ./src/main.c ./src/fdf.c ./src/rotations.c
+SRCS = ./src/main.c ./src/fdf.c ./src/rotations.c ./src/drawer.c ./src/read.c
 LIBS = ./minilibx/libmlx.a ./libft/libft.a
 
 #ECHO COLORS
@@ -22,14 +22,14 @@ BLUE=\033[0;34m
 RED=\033[0;31m
 
 all:
-	@echo ""
-	@$(MAKE) -w -s -C $(LIBFT_DIR)
-	@echo ""
-	@$(MAKE) -w -s -C $(MINILIBX_DIR)
-	@echo ""
+	@echo "LIBFT:"
+	@$(MAKE) -C $(LIBFT_DIR)
+	@echo "MINILIBX:"
+	@$(MAKE) -C $(MINILIBX_DIR)
+	@echo "FDF:"
 	@gcc -Wall -Wextra -Werror $(SRCS) $(LIBS) -framework OpenGL -framework AppKit -o fdf
-	@echo "$(GREEN) ✓ Executable Created: 'fdf' $(NOC)"
-	@./fdf maps/42.fdf
+	@echo "$(GREEN) ✓ FDF: Created executable 'fdf' $(NOC)"
+	@ ./fdf maps/42.fdf
 
 re: fclean all
 
@@ -44,7 +44,6 @@ fclean:
 	@rm fdf
 	@make fclean -s -C $(LIBFT_DIR)
 	@make fclean -s -C $(MINILIBX_DIR)
-
 	@echo "$(RED) ✗ FDF: Removed compiled fdf file $(NOC)"
 
 .PHONY: re
