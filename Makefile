@@ -6,13 +6,13 @@
 #    By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/03 20:05:48 by bcastro           #+#    #+#              #
-#    Updated: 2019/05/19 22:21:31 by bcastro          ###   ########.fr        #
+#    Updated: 2019/05/21 00:21:08 by bcastro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LIBFT_DIR = ./libft
 MINILIBX_DIR  = ./minilibx
-SRCS = ./src/main.c ./src/fdf.c ./src/rotations.c ./src/drawer.c
+SRCS = ./src/main.c ./src/fdf.c ./src/rotations.c ./src/drawer.c ./src/read.c
 LIBS = ./minilibx/libmlx.a ./libft/libft.a
 
 #ECHO COLORS
