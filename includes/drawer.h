@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/19 17:49:01 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/21 15:46:44 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/22 00:04:29 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,7 @@ typedef struct	s_fdf
 void			draw_line(t_point orig,
 				t_point dest, void *mlx_ptr, void *win_ptr);
 void			show_map(t_fdf fdf, int col, int row);
+void			show_cols(t_fdf fdf, int col, int row);
+void			show_rows(t_fdf fdf, int col, int row);
 
 #endif

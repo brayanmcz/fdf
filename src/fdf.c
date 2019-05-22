@@ -6,7 +6,11 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 13:56:39 by brayan            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/05/22 16:19:07 by bcastro          ###   ########.fr       */
+=======
+/*   Updated: 2019/05/22 00:33:03 by bcastro          ###   ########.fr       */
+>>>>>>> 1a69ccf41034b96ff2906e9ae96ab3e400abb91c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +44,17 @@ void fdf(char *file_name)
 	fdf.camera.x_rot = 0;
 	fdf.camera.y_rot = 0;
 	fdf.camera.z_rot = 45;
-	fdf.camera.zoom = 10;
+	fdf.camera.zoom = 20;
 	fdf.camera.projection = ISO;
+<<<<<<< HEAD
 	fdf.camera.x_offset = 80;
 	fdf.camera.y_offset = 80;
+=======
+	fdf.camera.x_offset = 10;
+	fdf.camera.y_offset = 350;
+>>>>>>> 1a69ccf41034b96ff2906e9ae96ab3e400abb91c
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 500, 500, "fdf");
-
 	fdf.map = get_map(file_name, &x, &y);
 	show_map(fdf, x - 1, y - 1);
 }
