@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/19 20:26:38 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/21 16:22:40 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/22 00:31:31 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,17 @@ void	show_cols(t_fdf fdf, int col, int row)
 	}
 	else
 	{
-		fdf.orig = rotate(fdf.orig,
-											fdf.camera.x_rot,
-											fdf.camera.y_rot,
+		fdf.orig = rotate(fdf.orig, fdf.camera.x_rot, fdf.camera.y_rot,
 											fdf.camera.z_rot);
-		fdf.dest = rotate(fdf.dest,
-											fdf.camera.x_rot,
-											fdf.camera.y_rot,
+		fdf.dest = rotate(fdf.dest, fdf.camera.x_rot, fdf.camera.y_rot,
 											fdf.camera.z_rot);
 	}
+	fdf.orig.x += fdf.camera.x_offset;
+	fdf.orig.y += fdf.camera.y_offset;
+	fdf.dest.x += fdf.camera.x_offset;
+	fdf.dest.y += fdf.camera.y_offset;	
 	draw_line(fdf.orig, fdf.dest, fdf.mlx_ptr, fdf.win_ptr);
 }
-
-
 
 void	show_rows(t_fdf fdf, int col, int row)
 {
@@ -82,15 +80,15 @@ void	show_rows(t_fdf fdf, int col, int row)
 	}
 	else
 	{
-		fdf.orig = rotate(fdf.orig,
-											fdf.camera.x_rot,
-											fdf.camera.y_rot,
+		fdf.orig = rotate(fdf.orig, fdf.camera.x_rot, fdf.camera.y_rot,
 											fdf.camera.z_rot);
-		fdf.dest = rotate(fdf.dest,
-											fdf.camera.x_rot,
-											fdf.camera.y_rot,
+		fdf.dest = rotate(fdf.dest, fdf.camera.x_rot, fdf.camera.y_rot,
 											fdf.camera.z_rot);
 	}
+	fdf.orig.x += fdf.camera.x_offset;
+	fdf.orig.y += fdf.camera.y_offset;
+	fdf.dest.x += fdf.camera.x_offset;
+	fdf.dest.y += fdf.camera.y_offset;	
 	draw_line(fdf.dest, fdf.orig, fdf.mlx_ptr, fdf.win_ptr);
 }
 
@@ -101,7 +99,6 @@ void	show_map(t_fdf fdf, int col, int row)
 
 	col_origin = col;
 	row_origin = row;
-
 	while (row >= 0)
 	{
 		col = col_origin;
