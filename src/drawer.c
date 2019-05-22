@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/19 20:26:38 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/22 16:28:51 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/22 16:32:12 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ void show_cols(t_fdf fdf, int col, int row)
 		fdf.dest = rotate(fdf.dest, fdf.camera.x_rot, fdf.camera.y_rot,
 											fdf.camera.z_rot);
 	}
-
+	fdf.orig.x += fdf.camera.x_offset;
+	fdf.orig.y += fdf.camera.y_offset;
+	fdf.dest.x += fdf.camera.x_offset;
+	fdf.dest.y += fdf.camera.y_offset;	
 	draw_line(fdf.orig, fdf.dest, fdf.mlx_ptr, fdf.win_ptr);
 }
 
