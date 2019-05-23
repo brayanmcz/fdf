@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 14:17:14 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/21 15:57:59 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/22 17:42:30 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@ int	main(int argc, char **argv)
 	{
 		fdf(argv[1]);
 	}
+	ft_putstr("Usage: ./fdf FILE_NAME\n");
 	return (0);
 }
