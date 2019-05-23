@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/19 20:26:38 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/22 18:04:07 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/22 18:33:56 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	show_map(t_fdf fdf, int col, int row)
 	int	col_origin;
 	int	row_origin;
 
+	col_origin = col;
 	row_origin = row;
 	while (row >= 0)
 	{
@@ -118,5 +119,4 @@ void	show_map(t_fdf fdf, int col, int row)
 	free(fdf.map);
 	mlx_hook(fdf.win_ptr, 17, 0, &safe_close, (void*)0);
 	mlx_hook(fdf.win_ptr, 2, 0, &key_pressed, (void*)0);
-	mlx_loop(fdf.mlx_ptr);
 }
