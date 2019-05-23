@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:11:06 by brayan            #+#    #+#             */
-/*   Updated: 2019/05/22 16:19:34 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/22 17:59:47 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 void	fdf(char *file_name);
 int		safe_open(char *file);
-int safe_close(int param);
+int		safe_close(int param);
+int		key_pressed(int key);
 
 #endif

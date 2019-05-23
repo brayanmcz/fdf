@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/19 20:26:38 by bcastro           #+#    #+#             */
-/*   Updated: 2019/05/22 17:33:16 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/05/22 18:04:07 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,9 @@ void	show_cols(t_fdf fdf, int col, int row)
 	fdf.orig.x = (col * fdf.camera.zoom);
 	fdf.orig.y = (row * fdf.camera.zoom);
 	fdf.orig.z = -1 * fdf.map[row][col] * fdf.camera.zoom;
-
 	fdf.dest.x = ((col - 1) * fdf.camera.zoom);
 	fdf.dest.y = (row * fdf.camera.zoom);
 	fdf.dest.z = -1 * fdf.map[row][col - 1] * fdf.camera.zoom;
-
 	if (fdf.camera.projection == ISO)
 	{
 		fdf.orig = iso_axis_rotation(fdf.orig);
@@ -72,11 +70,9 @@ void	show_rows(t_fdf fdf, int col, int row)
 	fdf.orig.x = (col * fdf.camera.zoom);
 	fdf.orig.y = (row * fdf.camera.zoom);
 	fdf.orig.z = -1 * fdf.map[row][col] * fdf.camera.zoom;
-
 	fdf.dest.x = (col * fdf.camera.zoom);
 	fdf.dest.y = ((row - 1) * fdf.camera.zoom);
 	fdf.dest.z = -1 * fdf.map[row - 1][col] * fdf.camera.zoom;
-
 	if (fdf.camera.projection == ISO)
 	{
 		fdf.orig = iso_axis_rotation(fdf.orig);
@@ -101,7 +97,6 @@ void	show_map(t_fdf fdf, int col, int row)
 	int	col_origin;
 	int	row_origin;
 
-	col_origin = col;
 	row_origin = row;
 	while (row >= 0)
 	{
@@ -122,6 +117,6 @@ void	show_map(t_fdf fdf, int col, int row)
 	free(fdf.map[row]);
 	free(fdf.map);
 	mlx_hook(fdf.win_ptr, 17, 0, &safe_close, (void*)0);
-	mlx_key_hook(fdf.win_ptr, &safe_close, (void*)0);
+	mlx_hook(fdf.win_ptr, 2, 0, &key_pressed, (void*)0);
 	mlx_loop(fdf.mlx_ptr);
 }
